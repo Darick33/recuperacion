@@ -1,0 +1,61 @@
+<div class="card my-5">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <h3 class="mb-0">
+        {{ titulo }}
+      </h3>
+    </div>
+    <form [formGroup]="frm_UnidadMedida" (ngSubmit)="grabar()">
+      <div class="row">
+        <div class="form-group mb-3">
+          <label class="form-label" for="Cedula">Detalle</label>
+          <input formControlName="Detalle" type="text" class="form-control" id="Detalle" placeholder="Ingrese el Detalle" />
+          @if (frm_UnidadMedida.get('Detalle').invalid && frm_UnidadMedida.get('Detalle').touched) {
+            @if (frm_UnidadMedida.get('Detalle').hasError('required')) {
+              <div>
+                <small style="color: red">Los nombres son requeridos</small>
+              </div>
+            }
+          }
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="Nombres">Tipo</label>
+          <select class="form-control" (change)="cambio($event)">
+            <option>Seleccione una opcion</option>
+            <option value="0">Presentacion</option>
+            <option value="1">Unidad de Medida</option>
+            <option value="2">Factor de Conversion</option>
+          </select>
+          @if (frm_UnidadMedida.get('Tipo').invalid && frm_UnidadMedida.get('Tipo').touched) {
+            @if (frm_UnidadMedida.get('Tipo').hasError('required')) {
+              <div>
+                <small style="color: red">Los nombres son requeridos</small>
+              </div>
+            }
+          }
+        </div>
+
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn btn-primary" [disabled]="frm_UnidadMedida.invalid">Grabar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--
+    IMPORTAR => FORMSMODULE  APP.MODULE.TS ||  NUEVOPROVEEDOR.COMPONENT.TS
+    
+    
+    
+    
+    
+    INTRPOLACION => DESDE EL TS AL HTML
+    {{ }} 
+    EVENTOS => EJECUTAR FUNCIONES EN EL TS
+    ()
+    DATA BINDING => DESDE EL HTML AL TS
+    []
+    TWO WAY BIDING => ENVIADO DE DATOS DESDE EL HTML AL TS Y DESDE EL TS AL HTML
+    [()]
+    -->

@@ -1,0 +1,93 @@
+<div class="card my-5">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <h3 class="mb-0">
+        {{ titulo }}
+        <!--Interpolacion
+            sirve para enviar datos desde el .ts hacia el html
+          -->
+      </h3>
+    </div>
+    <form [formGroup]="frm_Producto" (ngSubmit)="grabar()">
+      <div class="row">
+        
+        <div class="form-group mb-3 w-100">
+          <label for="idProducto" class="form-label">producto</label>
+          <select 
+            class="form-select" 
+            id="idProducto" 
+            name="idProducto" 
+            formControlName="idProducto"
+            required>
+            <option *ngFor="let producto of listaproductos" [value]="producto.idProducto">{{ producto.nombre }}</option>
+          </select>
+        </div>
+        <div class="form-group mb-3 w-100">
+          <label for="idProveedor" class="form-label">producto</label>
+          <select 
+            class="form-select" 
+            id="idProveedor" 
+            name="idProveedor" 
+            formControlName="idProveedor"
+            required>
+            <option *ngFor="let proveedor of listaProveedores" [value]="proveedor.idProveedor">{{ proveedor.nombre }}</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="fechaPedido">fecha</label>
+          <input
+            formControlName="fechaPedido"
+            type="date"
+            class="form-control"
+            id="fechaPedido"
+          />
+         
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="cantidad">cantidad</label>
+          <input
+            formControlName="cantidad"
+            type="text"
+            class="form-control"
+            id="cantidad"
+          />
+   
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="total">total</label>
+          <input
+            formControlName="total"
+            type="text"
+            class="form-control"
+            id="total"
+          />
+   
+        </div>
+
+
+
+
+
+
+
+
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn btn-primary" [disabled]="frm_Producto.invalid">Grabar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--
+    IMPORTAR => FORMSMODULE EN APP.MODULE.TS || NUEVOPRODUCTO.COMPONENT.TS
+    
+    INTERPOLACION => DESDE EL TS AL HTML
+    {{ }} 
+    EVENTOS => EJECUTAR FUNCIONES EN EL TS
+    ()
+    DATA BINDING => DESDE EL HTML AL TS
+    []
+    TWO WAY BINDING => ENVIADO DE DATOS DESDE EL HTML AL TS Y DESDE EL TS AL HTML
+    [()]
+  -->

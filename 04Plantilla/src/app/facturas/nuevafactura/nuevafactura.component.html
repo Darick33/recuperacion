@@ -1,0 +1,228 @@
+<div class="card my-5">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <h3 class="mb-0">
+        {{ titulo }}
+        <!--Interpolacion
+          sirve para enviar datos desde el .ts hacia el html
+          -->
+      </h3>
+    </div>
+    <div class="row">
+      <form [formGroup]="frm_factura" novalidate (ngSubmit)="grabar()">
+        <div class="container mt-4" id="impresion">
+          <!-- Encabezado de la Factura -->
+          <div class="row">
+            <div class="col-6">
+              <h2>Empresa XYZ</h2>
+              <p>RUC: 1234567890</p>
+              <p>Dirección: Calle Falsa 123, Quito, Ecuador</p>
+              <p>Teléfono: +593 999 999 999</p>
+              <p>Email: info</p>
+            </div>
+            <div class="col-6 text-end">
+              <h4>Factura</h4>
+              <p>No. 001-001-000000001</p>
+              <p>
+                <label class="form-label" for="password">Fecha de Emision</label>
+                <input type="date" class="form-control" formControlName="Fecha" />
+                @if (frm_factura.get('Fecha').invalid && frm_factura.get('Fecha').touched) {
+                  <div>
+                    @if (frm_factura.get('Fecha').hasError('required')) {
+                      <small style="color: red">Los nombres son requeridos</small>
+                    }
+                  </div>
+                }
+              </p>
+            </div>
+          </div>
+
+          <hr />
+
+          <!-- Información del Cliente -->
+          <div class="row">
+            <div class="col-12">
+              <h5>Datos del Cliente</h5>
+              <select class="form-control" (change)="cambio($event)">
+                <option>Seleccione una opcion</option>
+                @for (cliente of listaClientes; track $index) {
+                  <option value="{{ cliente.idClientes }}">{{ cliente.Nombres }}</option>
+                }
+              </select>
+              <p>
+                <strong>Nombre:</strong>
+                Juan Pérez
+              </p>
+              <p>
+                <strong>Cédula/RUC:</strong>
+                1234567890
+              </p>
+              <p>
+                <strong>Dirección:</strong>
+                Calle Ejemplo 456, Guayaquil, Ecuador
+              </p>
+              <p>
+                <strong>Teléfono:</strong>
+                +593 987 654 321
+              </p>
+            </div>
+          </div>
+
+          <hr />
+
+          <!-- Detalle de la Factura -->
+          <div class="row">
+            <div class="col-12">
+              <button
+                type="button"
+                class="btn btn-primary noimprimir"
+                data-bs-toggle="modal"
+                data-bs-target="#addProductModal"
+                (click)="productosLista($event)"
+              >
+                Agregar Producto
+              </button>
+              <table class="table table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>IVA (12%)</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of productoelejido; track $index) {
+                    <tr>
+                      <td>{{ item.Descripcion }}</td>
+                      <td>{{ item.Cantidad }}</td>
+                      <td>{{ item.Precio | currency }}</td>
+                      <td>{{ item.Subtotal | currency }}</td>
+                      <td>{{ item.IVA | currency }}</td>
+                      <td>{{ item.Total | currency }}</td>
+                    </tr>
+                  }
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th colspan="4" class="text-end">Subtotal</th>
+                    <th colspan="2">
+                      <input type="text" class="form-control" formControlName="Sub_total" (blur)="calculos()" />
+                      @if (frm_factura.get('Sub_total').invalid && frm_factura.get('Sub_total').touched) {
+                        <div>
+                          @if (frm_factura.get('Sub_total').hasError('required')) {
+                            <small style="color: red">Los nombres son requeridos</small>
+                          }
+                        </div>
+                      }
+                    </th>
+                  </tr>
+                  <tr>
+                    <th colspan="4" class="text-end">SUB TOTAL IVA (15%)</th>
+                    <th colspan="2">
+                      <input type="text" class="form-control" formControlName="Sub_total_iva" />
+                      @if (frm_factura.get('Sub_total_iva').invalid && frm_factura.get('Sub_total_iva').touched) {
+                        <div>
+                          @if (frm_factura.get('Sub_total_iva').hasError('required')) {
+                            <small style="color: red">Los nombres son requeridos</small>
+                          }
+                        </div>
+                      }
+                    </th>
+                  </tr>
+
+                  <tr>
+                    <th colspan="4" class="text-end">IVA (15%)</th>
+                    <th colspan="2">
+                      <div class="form-group mb-3">
+                        <input type="text" class="form-control" formControlName="Valor_IVA" readonly value="0.15" />
+                      </div>
+                    </th>
+                  </tr>
+
+                  <tr>
+                    <th colspan="4" class="text-end">Total a Pagar</th>
+                    <th colspan="2">
+                      <div class="form-group mb-3">
+                        <input type="text" class="form-control" ngValue="total" readonly [value]="totalapagar" />
+                      </div>
+                    </th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <hr />
+
+          <!-- Información Adicional -->
+          <div class="row">
+            <div class="col-12">
+              <p>
+                <strong>Forma de pago:</strong>
+                Transferencia Bancaria
+              </p>
+              <p>
+                <strong>Cuenta Bancaria:</strong>
+                Banco Pichincha, Cta: 123456789
+              </p>
+              <p>
+                <strong>Nota:</strong>
+                Gracias por su compra.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn btn-primary">Grabar factura</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Agregar Producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para agregar producto " -->
+        <form #productForm="ngForm" (ngSubmit)="cargaModal(productForm)">
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" ngModel required />
+          </div>
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Cantidad</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" ngModel required />
+          </div>
+
+          <button type="submit" class="btn btn-primary" [disabled]="!productForm.form.valid">Agregar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+  IMPORTAR => FORMSMODULE  APP.MODULE.TS ||  NUEVOPROVEEDOR.COMPONENT.TS
+  
+  
+  
+  
+  
+  INTRPOLACION => DESDE EL TS AL HTML
+  {{ }} 
+  EVENTOS => EJECUTAR FUNCIONES EN EL TS
+  ()
+  DATA BINDING => DESDE EL HTML AL TS
+  []
+  TWO WAY BIDING => ENVIADO DE DATOS DESDE EL HTML AL TS Y DESDE EL TS AL HTML
+  [()]
+  -->

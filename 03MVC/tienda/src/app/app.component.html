@@ -1,0 +1,117 @@
+<!--<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Sexto Angular</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link disabled"
+              href="#"
+              tabindex="-1"
+              aria-disabled="true"
+              >Disabled</a
+            >
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="flex-shrink-0">
+  <div class="container">
+    <h1 class="mt-5">Lista de Proveedores</h1>
+
+    <table class="table table-striped table-bordered table-responsive">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Empresa</th>
+          <th>Contacto</th>
+          <th>Telefono Contacto</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (proveedor of listaProveedores; track $index) {
+        <tr>
+          <td>{{ $index + 1 }}</td>
+          <td>{{ proveedor.Nombre_Empresa }}</td>
+          <td>{{ proveedor.Contacto_Empresa }}</td>
+          <td>{{ proveedor.Teleofno_Contacto }}</td>
+
+          <td>
+            <button type="button" class="btn btn-outline-success">
+              Editar
+            </button>
+            <button
+              (click)="eliminar(proveedor.idProveedores)"
+              type="button"
+              class="btn btn-outline-danger"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-light">
+  <div class="container">
+    <span class="text-muted">Proyecto de tienda en angular.</span>
+  </div>
+</footer>-->
+<h1>Dashboard</h1>
+<a href="proveedores" class="btn btn-outline-success">Proveedores</a>
+<a href="clientes" class="btn btn-outline-danger">Clientes</a>
+<a href="productos" class="btn btn-outline-secondary">Prodcutos</a>
+<!--routerLink-->
+<router-outlet />

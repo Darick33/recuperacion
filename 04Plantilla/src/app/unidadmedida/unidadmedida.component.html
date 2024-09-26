@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Lista de Proveedores" blockClass="pc-component">
+      <div class="col-md-12 col-xl-8">
+        <h5 class="mb-3">
+          <a href="/nuevaunidadmedida" class="btn btn-outline-dark">Nuevo Unidad de Medida</a>
+        </h5>
+        <div class="card tbl-card">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Detalle</th>
+                  <th>Tipo</th>
+
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (unidadmedida of listaunidades; track $index) {
+                  <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ unidadmedida.Detalle }}</td>
+                    <!--<td>{{ unidadmedida.Tipo == '0' ? 'Presentacion': unidadmedida.Tipo == 1 ? 'Unidad de Medida': 'Factor de Conversion' }}</td>-->
+                    @if (unidadmedida.Tipo == 0) {
+                      <td>Presentacion</td>
+                    } @else if (unidadmedida.Tipo == 1) {
+                      <td>Unidad de Medida</td>
+                    } @else {
+                      <td>Factor de Conversion</td>
+                    }
+
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-outline-success"
+                        [routerLink]="['/editarunidadmedida/', unidadmedida.idUnidad_Medida]"
+                      >
+                        Editar
+                      </button>
+                      <button (click)="eliminar(unidadmedida.idUnidad_Medida)" type="button" class="btn btn-outline-danger">
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+<!--
+    LOS COMPONENTES (.TS) ESTAN OBLIGADOS A IMPORTAR LA REFERENCIA PARA QUE SE PUEDA USAR EN EL HTML
+    -->
