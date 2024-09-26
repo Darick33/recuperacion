@@ -31,6 +31,9 @@ export class PedidosComponent implements OnInit {
     });
   }
   trackByFn() {}
+  abiriInforme(){
+    window.open('http://localhost/recuperacion/03MVC/reports/proveedormayor.report.php');
+  }
 
   eliminar(idProductos) {
     Swal.fire({

@@ -90,18 +90,20 @@ class Pedidos
             $con->close();
         }
     }
-    public function obtenerProductos()
+    public function obtenerProveedoresMayor()
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoParaConectar();
-        $cadena = "SELECT P.nombre AS proveedor, SUM(PD.cantidad) AS totalProductosVendidos, SUM(PD.total) AS montoTotalVentas
+        $cadena = "SELECT P.nombre AS proveedor, 
+       SUM(PD.cantidad) AS totalProductosVendidos, 
+       SUM(PD.total) AS montoTotalVentas
 FROM Pedidos PD
-JOIN Productos PR ON PD.idProducto = PR.idProducto
-JOIN Proveedores P ON PR.idProveedor = P.idProveedor
+JOIN Proveedores P ON PD.idProveedor = P.idProveedor
 WHERE PD.fechaPedido >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
 GROUP BY P.nombre
 ORDER BY totalProductosVendidos DESC
-LIMIT 1;";
+LIMIT 1
+";
         $datos = mysqli_query($con, $cadena);
         $con->close();
         return $datos;
